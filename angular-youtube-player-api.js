@@ -38,7 +38,18 @@ angular.module('youtube', ['ng']).run(function () {
 
         service.createPlayer = function (options) {
             $log.info('Creating a new Youtube player for DOM id ' + this.playerId + ' and video ' + options.videoId);
-            return new YT.Player(this.playerId, options);
+            var player = new YT.Player(this.playerId, options);
+            player.getState = function() {
+              var numState = player.getPlayerState()
+              var states = "ENDED PLAYING PAUSED BUFFERING CUED UNSTARTED".split(" ")
+              for (var i = 0; i < states.length; i++) {
+                var state = states[i]
+                if (YT.PlayerState[state] == numState) {
+                  return state
+                }
+              }
+            }
+            return player
         };
 
         service.loadPlayer = function () {
