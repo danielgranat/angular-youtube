@@ -15,10 +15,22 @@ angular.module('youtube', ['ng']).run(function () {
         // Youtube callback when API is ready
         $window.onYouTubeIframeAPIReady = function () {
             $log.info('Youtube API is ready');
-            service.ready = true;
+            service.__ready = true;
+            for (var i = 0; i < service.__callOnReady.length; i++) {
+              fn = service.__callOnReady[i]
+              fn()
+            }
         };
 
-        service.ready = false;
+        service.__callOnReady = []
+        service.ready = function(fn) {
+          if (service.ready.__ready) {
+            fn()
+          } else {
+            service.__callOnReady.push(fn)
+          }
+        }
+
         service.playerId = null;
         service.player = null;
         service.videoId = null;
