@@ -31,24 +31,14 @@ angular.module('youtube', ['ng']).run(function () {
           }
         }
 
-        service.playerId = null;
-        service.player = null;
-        service.videoId = null;
-        service.playerHeight = '390';
-        service.playerWidth = '640';
-
         service.bindVideoPlayer = function (elementId) {
             $log.info('Binding to player ' + elementId);
             service.playerId = elementId;
         };
 
-        service.createPlayer = function () {
-            $log.info('Creating a new Youtube player for DOM id ' + this.playerId + ' and video ' + this.videoId);
-            return new YT.Player(this.playerId, {
-                height: this.playerHeight,
-                width: this.playerWidth,
-                videoId: this.videoId
-            });
+        service.createPlayer = function (options) {
+            $log.info('Creating a new Youtube player for DOM id ' + this.playerId + ' and video ' + options.videoId);
+            return new YT.Player(this.playerId, options);
         };
 
         service.loadPlayer = function () {
