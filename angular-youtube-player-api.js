@@ -24,7 +24,7 @@ angular.module('youtube', ['ng']).run(function () {
 
         service.__callOnReady = []
         service.ready = function(fn) {
-          if (service.ready.__ready) {
+          if (service.__ready) {
             fn()
           } else {
             service.__callOnReady.push(fn)
@@ -54,7 +54,7 @@ angular.module('youtube', ['ng']).run(function () {
 
         service.loadPlayer = function () {
             // API ready?
-            if (this.ready && this.playerId && this.videoId) {
+            if (this.__ready && this.playerId && this.videoId) {
                 if(this.player) {
                     this.player.destroy();
                 }
