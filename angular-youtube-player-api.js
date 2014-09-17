@@ -58,8 +58,8 @@ angular.module('youtube', ['ng']).run(function () {
                 if(this.player) {
                     this.player.destroy();
                 }
-
-                this.player = this.createPlayer();
+                var options = {videoId:this.videoId};
+                this.player = this.createPlayer(options);
             }
         };
 
